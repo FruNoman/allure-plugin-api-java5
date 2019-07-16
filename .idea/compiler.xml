@@ -10,5 +10,8 @@
         <module name="allure-api-plugin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="allureapiplugin" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
