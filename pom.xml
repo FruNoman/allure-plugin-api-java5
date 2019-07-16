@@ -6,7 +6,7 @@
 
     <groupId>com.github.frunoman</groupId>
     <artifactId>allure-api-plugin</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <properties>
         <initial.java.version>1.8</initial.java.version>
         <target.java.version>1.8</target.java.version>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>net.orfjackal.retrolambda</groupId>
                 <artifactId>retrolambda-maven-plugin</artifactId>
-                <version>2.0.3</version>
+                <version>2.5.6</version>
                 <executions>
                     <execution>
                         <goals>
@@ -45,6 +45,7 @@
                 </executions>
                 <configuration>
                     <target>${target.java.version}</target>
+                    <defaultMethods>true</defaultMethods>
                 </configuration>
             </plugin>
             <plugin>
