@@ -47,7 +47,7 @@ public abstract class CommonJsonAggregator implements Aggregator {
     public void aggregate(final Configuration configuration,
                           final List<LaunchResults> launchesResults,
                           final Path outputDirectory) throws IOException {
-        final JacksonContext jacksonContext = configuration.requireContext(JacksonContext.class);
+        final JacksonContext jacksonContext = configuration.getContext(JacksonContext.class);
         final Path dataFolder = Files.createDirectories(outputDirectory.resolve(this.location));
         final Path dataFile = dataFolder.resolve(this.fileName);
         try (OutputStream os = Files.newOutputStream(dataFile)) {

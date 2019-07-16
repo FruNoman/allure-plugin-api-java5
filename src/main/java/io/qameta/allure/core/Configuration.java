@@ -57,8 +57,9 @@ public interface Configuration {
      * @param <T>         the java type of context.
      * @return resolved context.
      */
-    <T> Optional<T> getContext(Class<T> contextType);
 
+
+    <T> T getContext(Class<T> contextType);
     /**
      * The same as {@link #getContext(Class)} but throws an exception
      * if context doesn't present.
@@ -66,7 +67,4 @@ public interface Configuration {
      * @return resolved context.
      * @throws ContextNotFoundException if no such context present.
      */
-    default <T> T requireContext(Class<T> contextType) {
-        return getContext(contextType).orElseThrow(() -> new ContextNotFoundException(contextType));
-    }
 }
