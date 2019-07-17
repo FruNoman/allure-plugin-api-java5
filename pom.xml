@@ -6,7 +6,7 @@
 
     <groupId>com.github.frunoman</groupId>
     <artifactId>allure-api-plugin</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
     <properties>
         <initial.java.version>1.8</initial.java.version>
         <target.java.version>1.8</target.java.version>
@@ -83,31 +83,37 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.7.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>2.7.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.2.4</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.streamsupport</groupId>
             <artifactId>streamsupport</artifactId>
             <version>1.7.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
             <artifactId>flexmark</artifactId>
             <version>0.50.18</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>4.0</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

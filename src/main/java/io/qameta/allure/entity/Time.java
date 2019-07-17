@@ -18,7 +18,7 @@ package io.qameta.allure.entity;
 
 import java.io.Serializable;
 
-import static java.util.Objects.isNull;
+import static java8.util.Objects.isNull;
 
 public class Time implements Serializable {
 
