@@ -28,12 +28,4 @@ public interface TreeGroup extends TreeNode {
 
     void addChild(TreeNode node);
 
-    default <T extends TreeNode> Optional<T> findNodeOfType(final String name, final Class<T> type) {
-        return getChildren().stream()
-                .filter(type::isInstance)
-                .map(type::cast)
-                .filter(node -> Objects.equals(node.getName(), name))
-                .findFirst();
-    }
-
 }

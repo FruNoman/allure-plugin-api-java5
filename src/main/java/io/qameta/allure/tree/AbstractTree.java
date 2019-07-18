@@ -17,7 +17,10 @@ package io.qameta.allure.tree;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
+import java8.util.Objects;
+import java8.util.Optional;
+import java8.util.function.Predicate;
+import java8.util.function.Supplier;
 
 import java8.util.function.Consumer;
 import java8.util.function.Function;
@@ -49,6 +52,29 @@ public abstract class AbstractTree<T, S extends TreeGroup, U extends TreeLeaf> i
         this.leafFactory = leafFactory;
     }
 
+    public <S extends TreeNode> Optional<S> findNodeOfType(final String name, final Class<S> type) {
+        return StreamSupport.stream(getChildren())
+                .filter(new Predicate<TreeNode>() {
+                    @Override
+                    public boolean test(TreeNode treeNode) {
+                        return type.isInstance(treeNode);
+                    }
+                })
+                .map(new Function<TreeNode, S>() {
+                    @Override
+                    public S apply(TreeNode treeNode) {
+                        return type.cast(treeNode);
+                    }
+                })
+                .filter(new Predicate<S>() {
+                    @Override
+                    public boolean test(S s) {
+                        return Objects.equals(s.getName(), name);
+                    }
+                })
+                .findFirst();
+    }
+
     @Override
     public void add(final T item) {
         getEndNodes(item, root, treeClassifier.classify(item), 0)
@@ -72,7 +98,7 @@ public abstract class AbstractTree<T, S extends TreeGroup, U extends TreeLeaf> i
                 .flatMap(new Function<String, Stream<? extends S>>() {
                     @Override
                     public Stream<? extends S> apply(String s) {
-                        final S child = node.findNodeOfType(s, getRootType())
+                        final S child = findNodeOfType(s, getRootType())
                                 .orElseGet(new Supplier<S>() {
                                     @Override
                                     public S get() {
