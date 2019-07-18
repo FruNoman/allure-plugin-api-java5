@@ -24,6 +24,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java8.util.Objects;
+import java8.util.function.Function;
+import java8.util.function.Predicate;
 import java8.util.stream.Collectors;
 import java8.util.stream.RefStreams;
 import java8.util.stream.Stream;
@@ -49,9 +51,24 @@ public final class TreeUtils {
     public static List<TreeLayer> groupByLabels(final TestResult testResult,
                                                 final LabelName... labelNames) {
         return RefStreams.of(labelNames)
-                .map(testResult::findAllLabels)
-                .filter(strings -> !strings.isEmpty())
-                .map(DefaultTreeLayer::new)
+                .map(new Function<LabelName, List<String>>() {
+                    @Override
+                    public List<String> apply(LabelName labelName) {
+                        return testResult.findAllLabels(labelName);
+                    }
+                })
+                .filter(new Predicate<List<String>>() {
+                    @Override
+                    public boolean test(List<String> stringList) {
+                        return !stringList.isEmpty();
+                    }
+                })
+                .map(new Function<List<String>, TreeLayer>() {
+                    @Override
+                    public TreeLayer apply(List<String> stringList) {
+                        return new DefaultTreeLayer(stringList);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

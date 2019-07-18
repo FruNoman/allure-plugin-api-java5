@@ -6,7 +6,7 @@
 
     <groupId>com.github.frunoman</groupId>
     <artifactId>allure-api-plugin</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.9</version>
     <properties>
         <initial.java.version>1.8</initial.java.version>
         <target.java.version>1.8</target.java.version>
@@ -95,7 +95,6 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.2.4</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.streamsupport</groupId>
