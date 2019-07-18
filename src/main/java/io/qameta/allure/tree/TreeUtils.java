@@ -23,12 +23,16 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
 import java8.util.Objects;
+import java8.util.function.BiFunction;
+import java8.util.function.BinaryOperator;
 import java8.util.function.Function;
 import java8.util.function.Predicate;
 import java8.util.stream.Collectors;
 import java8.util.stream.RefStreams;
 import java8.util.stream.Stream;
+import java8.util.stream.StreamSupport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -73,20 +77,40 @@ public final class TreeUtils {
     }
 
     public static Statistic calculateStatisticByLeafs(final TestResultTreeGroup group) {
-        return group.getChildren().stream()
+        return StreamSupport.stream(group.getChildren())
                 .reduce(
                         new Statistic(),
-                        TreeUtils::updateStatisticRecursive,
-                        TreeUtils::mergeStatistic
+                        new BiFunction<Statistic, TreeNode, Statistic>() {
+                            @Override
+                            public Statistic apply(Statistic statistic, TreeNode treeNode) {
+                                return updateStatisticRecursive(statistic, treeNode);
+                            }
+                        },
+                        new BinaryOperator<Statistic>() {
+                            @Override
+                            public Statistic apply(Statistic statistic, Statistic statistic2) {
+                                return mergeStatistic(statistic, statistic2);
+                            }
+                        }
                 );
     }
 
     public static Statistic calculateStatisticByChildren(final TestResultTreeGroup group) {
-        return group.getChildren().stream()
+        return StreamSupport.stream(group.getChildren())
                 .reduce(
                         new Statistic(),
-                        TreeUtils::updateStatistic,
-                        TreeUtils::mergeStatistic
+                        new BiFunction<Statistic, TreeNode, Statistic>() {
+                            @Override
+                            public Statistic apply(Statistic statistic, TreeNode treeNode) {
+                                return updateStatistic(statistic, treeNode);
+                            }
+                        },
+                        new BinaryOperator<Statistic>() {
+                            @Override
+                            public Statistic apply(Statistic statistic, Statistic statistic2) {
+                                return mergeStatistic(statistic, statistic2);
+                            }
+                        }
                 );
     }
 
