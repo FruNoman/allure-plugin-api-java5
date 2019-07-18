@@ -19,6 +19,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.*;
+
+import java8.util.*;
+import java8.util.Optional;
+import java8.util.function.Function;
+import java8.util.function.Predicate;
 import java8.util.stream.Collector;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
@@ -91,8 +96,18 @@ public class TestResult implements Serializable, Nameable, Parameterizable, Stat
 
     public <T> T findAllLabels(final String name, final Collector<String, ?, T> collector) {
         return StreamSupport.stream(getLabels())
-                .filter(label -> name.equals(label.getName()))
-                .map(Label::getValue)
+                .filter(new Predicate<Label>() {
+                    @Override
+                    public boolean test(Label label) {
+                        return name.equals(label.getName());
+                    }
+                })
+                .map(new Function<Label, String>() {
+                    @Override
+                    public String apply(Label label) {
+                        return label.getValue();
+                    }
+                })
                 .collect(collector);
     }
 
@@ -109,10 +124,20 @@ public class TestResult implements Serializable, Nameable, Parameterizable, Stat
     }
 
     public Optional<String> findOneLabel(final String name) {
-        return getLabels().stream()
-                .filter(label -> name.equals(label.getName()))
+        return StreamSupport.stream(getLabels())
+                .filter(new Predicate<Label>() {
+                    @Override
+                    public boolean test(Label label) {
+                        return name.equals(label.getName());
+                    }
+                })
                 .findAny()
-                .map(Label::getValue);
+                .map(new Function<Label, String>() {
+                    @Override
+                    public String apply(Label label) {
+                        return label.getValue();
+                    }
+                });
     }
 
     public void addLabelIfNotExists(final LabelName name, final String value) {
@@ -123,9 +148,19 @@ public class TestResult implements Serializable, Nameable, Parameterizable, Stat
         if (value == null || name == null) {
             return;
         }
-        final Optional<String> any = getLabels().stream()
-                .map(Label::getName)
-                .filter(name::equals)
+        final Optional<String> any = StreamSupport.stream(getLabels())
+                .map(new Function<Label, String>() {
+                    @Override
+                    public String apply(Label label) {
+                        return label.getName();
+                    }
+                })
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) {
+                        return name.equals(s);
+                    }
+                })
                 .findAny();
         if (!any.isPresent()) {
             addLabel(name, value);

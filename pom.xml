@@ -6,7 +6,7 @@
 
     <groupId>com.github.frunoman</groupId>
     <artifactId>allure-api-plugin</artifactId>
-    <version>0.0.7</version>
+    <version>0.0.8</version>
     <properties>
         <initial.java.version>1.8</initial.java.version>
         <target.java.version>1.8</target.java.version>
