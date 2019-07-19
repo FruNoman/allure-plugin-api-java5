@@ -67,4 +67,6 @@ public interface Configuration {
      * @return resolved context.
      * @throws ContextNotFoundException if no such context present.
      */
+
+     <T> T requireContext(Class<T> contextType,Exception e);
 }

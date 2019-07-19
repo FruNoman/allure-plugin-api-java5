@@ -21,9 +21,9 @@ import io.qameta.allure.entity.TestResult;
 
 import java.util.List;
 import java8.util.function.BiFunction;
+import java8.util.function.Function;
 import java8.util.stream.Collectors;
 import java8.util.stream.RefStreams;
-import java8.util.stream.Stream;
 
 /**
  * @author charlie (Dmitry Baev).
@@ -49,7 +49,12 @@ public class StatusMetric implements Metric {
     @Override
     public List<MetricLine> getLines() {
         return RefStreams.of(Status.values())
-                .map(status -> lineFactory.apply(status, statistic.get(status)))
+                .map(new Function<Status, MetricLine>() {
+                    @Override
+                    public MetricLine apply(Status status) {
+                        return lineFactory.apply(status, statistic.get(status));
+                    }
+                })
                 .collect(Collectors.toList());
     }
 }

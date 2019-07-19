@@ -17,6 +17,7 @@ package io.qameta.allure.entity;
 
 
 import java.io.Serializable;
+
 import java8.util.Objects;
 import java8.util.function.BiFunction;
 import java8.util.function.Consumer;
@@ -61,12 +62,80 @@ public class GroupTime implements Serializable {
         if (Objects.isNull(time)) {
             return;
         }
-        update(firstNonNull(getStart(), MAX_VALUE), time.getStart(), Math::min, this::setStart);
-        update(firstNonNull(getStop(), 0L), time.getStop(), Math::max, this::setStop);
-        update(getStop(), getStart(), (a, b) -> a - b, this::setDuration);
-        update(firstNonNull(getMinDuration(), MAX_VALUE), time.getDuration(), Math::min, this::setMinDuration);
-        update(firstNonNull(getMaxDuration(), 0L), time.getDuration(), Math::max, this::setMaxDuration);
-        update(firstNonNull(getSumDuration(), 0L), time.getDuration(), (a, b) -> a + b, this::setSumDuration);
+        update(firstNonNull(getStart(), MAX_VALUE), time.getStart(), new BiFunction<Long, Long, Long>() {
+            @Override
+            public Long apply(Long aLong, Long aLong2) {
+                return Math.min(aLong, aLong2);
+            }
+        }, new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) {
+                setStart(aLong);
+            }
+        });
+
+        update(firstNonNull(getStop(), 0L), time.getStop(), new BiFunction<Long, Long, Long>() {
+            @Override
+            public Long apply(Long aLong, Long aLong2) {
+                return Math.max(aLong, aLong2);
+            }
+        }, new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) {
+                setStop(aLong);
+            }
+        });
+
+        update(getStop(), getStart(), new BiFunction<Long, Long, Long>() {
+                    @Override
+                    public Long apply(Long aLong, Long aLong2) {
+                        return aLong - aLong2;
+                    }
+                },
+                new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        setDuration(aLong);
+                    }
+                });
+
+        update(firstNonNull(getMinDuration(), MAX_VALUE), time.getDuration(), new BiFunction<Long, Long, Long>() {
+                    @Override
+                    public Long apply(Long aLong, Long aLong2) {
+                        return Math.min(aLong, aLong2);
+                    }
+                },
+                new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        setMinDuration(aLong);
+                    }
+                });
+
+        update(firstNonNull(getMaxDuration(), 0L), time.getDuration(), new BiFunction<Long, Long, Long>() {
+                    @Override
+                    public Long apply(Long aLong, Long aLong2) {
+                        return Math.max(aLong, aLong2);
+                    }
+                },
+                new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        setMaxDuration(aLong);
+                    }
+                });
+
+        update(firstNonNull(getSumDuration(), 0L), time.getDuration(), new BiFunction<Long, Long, Long>() {
+            @Override
+            public Long apply(Long aLong, Long aLong2) {
+                return aLong + aLong2;
+            }
+        }, new Consumer<Long>() {
+            @Override
+            public void accept(Long aLong) {
+                setSumDuration(aLong);
+            }
+        });
     }
 
     protected static <T> void update(final T first, final T second,

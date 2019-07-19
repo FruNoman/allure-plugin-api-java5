@@ -16,6 +16,8 @@
 package io.qameta.allure.entity;
 
 import java8.util.Objects;
+import java8.util.function.Predicate;
+import java8.util.function.Supplier;
 import java8.util.stream.RefStreams;
 import java8.util.stream.Stream;
 
@@ -33,8 +35,18 @@ import java8.util.stream.Stream;
     @SafeVarargs
     public static <T> T firstNonNull(final T... items) {
         return RefStreams.of(items)
-                .filter(Objects::nonNull)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("At least one argument should be not null"));
+                .filter(new Predicate<T>() {
+                    @Override
+                    public boolean test(T t) {
+                        return Objects.nonNull(t);
+                    }
+                })
+                .findFirst().get();
+//                .orElseThrow(new Supplier<Throwable>() {
+//                    @Override
+//                    public Throwable get() {
+//                        return new IllegalStateException("At least one argument should be not null");
+//                    }
+//                });
     }
 }

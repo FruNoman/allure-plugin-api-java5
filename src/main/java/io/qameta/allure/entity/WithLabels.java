@@ -17,6 +17,8 @@ package io.qameta.allure.entity;
 
 import java.util.List;
 import java8.util.Optional;
+import java8.util.function.Function;
+import java8.util.function.Predicate;
 import java8.util.stream.Collector;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
@@ -37,8 +39,18 @@ public interface WithLabels {
 
     default <T> T findAll(String name, Collector<String, ?, T> collector) {
         return StreamSupport.stream(getLabels())
-                .filter(label -> name.equals(label.getName()))
-                .map(Label::getValue)
+                .filter(new Predicate<Label>() {
+                    @Override
+                    public boolean test(Label label) {
+                        return name.equals(label.getName());
+                    }
+                })
+                .map(new Function<Label, String>() {
+                    @Override
+                    public String apply(Label label) {
+                        return label.getValue();
+                    }
+                })
                 .collect(collector);
     }
 
@@ -56,8 +68,18 @@ public interface WithLabels {
 
     default Optional<String> findOne(String name) {
         return StreamSupport.stream(getLabels())
-                .filter(label -> name.equals(label.getName()))
-                .map(Label::getValue)
+                .filter(new Predicate<Label>() {
+                    @Override
+                    public boolean test(Label label) {
+                        return name.equals(label.getName());
+                    }
+                })
+                .map(new Function<Label, String>() {
+                    @Override
+                    public String apply(Label label) {
+                        return label.getValue();
+                    }
+                })
                 .findAny();
     }
 
@@ -70,8 +92,18 @@ public interface WithLabels {
             return;
         }
         final Optional<String> any = StreamSupport.stream(getLabels())
-                .map(Label::getName)
-                .filter(name::equals)
+                .map(new Function<Label, String>() {
+                    @Override
+                    public String apply(Label label) {
+                        return label.getName();
+                    }
+                })
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) {
+                        return name.equals(s);
+                    }
+                })
                 .findAny();
         if (!any.isPresent()) {
             addLabel(name, value);

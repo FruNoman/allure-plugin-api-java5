@@ -16,6 +16,8 @@
 package io.qameta.allure.entity;
 
 import java.util.List;
+
+import java8.util.function.Function;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
@@ -28,7 +30,12 @@ public interface Parameterizable {
 
     default List<String> getParameterValues() {
         return StreamSupport.stream(getParameters())
-                .map(Parameter::getValue)
+                .map(new Function<Parameter, String>() {
+                    @Override
+                    public String apply(Parameter parameter) {
+                        return parameter.getValue();
+                    }
+                })
                 .collect(Collectors.toList());
     }
 }

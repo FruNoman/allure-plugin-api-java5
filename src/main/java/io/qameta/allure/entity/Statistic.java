@@ -20,7 +20,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import java8.util.Comparators;
 import java8.util.Objects;
+import java8.util.function.Function;
 
 /**
  * @author charlie (Dmitry Baev).
@@ -121,11 +124,37 @@ public class Statistic implements Serializable {
     }
 
     public static Comparator<Statistic> comparator() {
-        return Comparator.comparing(Statistic::getFailed)
-                .thenComparing(Statistic::getBroken)
-                .thenComparing(Statistic::getPassed)
-                .thenComparing(Statistic::getSkipped)
-                .thenComparing(Statistic::getUnknown);
+        Comparator<Statistic> faileds = Comparators.comparing(new Function<Statistic, Long>() {
+            @Override
+            public Long apply(Statistic statistic) {
+                return statistic.getFailed();
+            }
+        });
+        Comparator<Statistic> brokens = Comparators.thenComparing(faileds,new Function<Statistic, Long>() {
+            @Override
+            public Long apply(Statistic statistic) {
+                return statistic.getBroken();
+            }
+        });
+        Comparator<Statistic> passed = Comparators.thenComparing(brokens,new Function<Statistic, Long>() {
+            @Override
+            public Long apply(Statistic statistic) {
+                return statistic.getPassed();
+            }
+        });
+        Comparator<Statistic> skipped = Comparators.thenComparing(passed,new Function<Statistic, Long>() {
+            @Override
+            public Long apply(Statistic statistic) {
+                return statistic.getSkipped();
+            }
+        });
+        Comparator<Statistic> unknown = Comparators.thenComparing(skipped,new Function<Statistic, Long>() {
+            @Override
+            public Long apply(Statistic statistic) {
+                return statistic.getUnknown();
+            }
+        });
+        return unknown;
     }
 
     public long getFailed() {

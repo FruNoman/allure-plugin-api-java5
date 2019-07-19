@@ -46,13 +46,13 @@ public abstract class CommonJsonAggregator implements Aggregator {
     @Override
     public void aggregate(final Configuration configuration,
                           final List<LaunchResults> launchesResults,
-                          final Path outputDirectory) throws IOException {
-        final JacksonContext jacksonContext = configuration.getContext(JacksonContext.class);
-        final Path dataFolder = Files.createDirectories(outputDirectory.resolve(this.location));
-        final Path dataFile = dataFolder.resolve(this.fileName);
-        try (OutputStream os = Files.newOutputStream(dataFile)) {
-            jacksonContext.getValue().writeValue(os, getData(launchesResults));
-        }
+                          final String outputDirectory) throws IOException {
+//        final JacksonContext jacksonContext = configuration.getContext(JacksonContext.class);
+//        final Path dataFolder = Files.createDirectories(outputDirectory.resolve(this.location));
+//        final Path dataFile = dataFolder.resolve(this.fileName);
+//        try (OutputStream os = Files.newOutputStream(dataFile)) {
+//            jacksonContext.getValue().writeValue(os, getData(launchesResults));
+//        }
     }
 
     protected abstract Object getData(List<LaunchResults> launches);

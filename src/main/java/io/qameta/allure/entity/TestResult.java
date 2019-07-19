@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.*;
 
+
 import java8.util.*;
 import java8.util.Optional;
 import java8.util.function.Function;
@@ -78,7 +79,12 @@ public class TestResult implements Serializable, Nameable, Parameterizable, Stat
 
     @SuppressWarnings("unchecked")
     public <T> T getExtraBlock(final String blockName, final T defaultValue) {
-        return (T) extra.computeIfAbsent(blockName, name -> defaultValue);
+        T object = (T) extra.get(blockName);
+        if(object == null){
+            object = defaultValue;
+            extra.put(blockName,object);
+        }
+        return object;
     }
 
     @SuppressWarnings("unchecked")
@@ -176,9 +182,18 @@ public class TestResult implements Serializable, Nameable, Parameterizable, Stat
     }
 
     public static Comparator<TestResult> comparingByTimeAsc() {
-        return comparing(
-                TestResult::getTime,
-                nullsFirst(comparing(Time::getStart, nullsFirst(naturalOrder())))
+        return Comparators.comparing(new Function<TestResult, Time>() {
+                             @Override
+                             public Time apply(TestResult testResult) {
+                                 return testResult.getTime();
+                             }
+                         },
+                Comparators.nullsFirst(Comparators.comparing(new Function<Time, Long>() {
+                    @Override
+                    public Long apply(Time time) {
+                        return time.getStart();
+                    }
+                }, Comparators.nullsFirst(Comparators.naturalOrder())))
         );
     }
 

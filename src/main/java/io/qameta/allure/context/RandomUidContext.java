@@ -18,6 +18,7 @@ package io.qameta.allure.context;
 import io.qameta.allure.Context;
 
 import java.math.BigInteger;
+
 import java8.util.concurrent.ThreadLocalRandom;
 import java8.util.function.Supplier;
 
@@ -34,10 +35,13 @@ public class RandomUidContext implements Context<Supplier<String>> {
 
     @Override
     public Supplier<String> getValue() {
-        return () -> {
-            final byte[] randomBytes = new byte[UID_RANDOM_BYTES_COUNT];
-            ThreadLocalRandom.current().nextBytes(randomBytes);
-            return new BigInteger(1, randomBytes).toString(RADIX);
+        return new Supplier<String>() {
+            @Override
+            public String get() {
+                final byte[] randomBytes = new byte[UID_RANDOM_BYTES_COUNT];
+                ThreadLocalRandom.current().nextBytes(randomBytes);
+                return new BigInteger(1, randomBytes).toString(RADIX);
+            }
         };
     }
 }

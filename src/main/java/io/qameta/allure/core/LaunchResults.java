@@ -38,11 +38,7 @@ public interface LaunchResults {
      *
      * @return the results that are not hidden.
      */
-    default Set<TestResult> getResults() {
-        return StreamSupport.stream(getAllResults())
-                .filter(result -> !result.isHidden())
-                .collect(Collectors.toSet());
-    }
+    Set<TestResult> getResults();
 
     /**
      * Returns all test results, including hidden.
@@ -76,9 +72,6 @@ public interface LaunchResults {
      * @param <T>          the java type of extra block.
      * @return the found block or default value.
      */
-    default <T> T getExtra(String name, Supplier<T> defaultValue) {
-        final Optional<T> extra = getExtra(name);
-        return extra.orElseGet(defaultValue);
-    }
+    <T> T getExtra(String name, Supplier<T> defaultValue);
 
 }

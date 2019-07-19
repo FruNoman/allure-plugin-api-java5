@@ -23,9 +23,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.io.IOException;
-import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -48,21 +45,21 @@ public abstract class CommonCsvExportAggregator<T> implements Aggregator {
     @Override
     public void aggregate(final Configuration configuration,
                           final List<LaunchResults> launchesResults,
-                          final Path outputDirectory) throws IOException {
-        final Path dataFolder = Files.createDirectories(outputDirectory.resolve(Constants.DATA_DIR));
-        final Path csv = dataFolder.resolve(fileName);
-
-        try (Writer writer = Files.newBufferedWriter(csv)) {
-            final StatefulBeanToCsvBuilder<T> builder = new StatefulBeanToCsvBuilder<>(writer);
-            final CustomMappingStrategy<T> mappingStrategy = new CustomMappingStrategy<>();
-            mappingStrategy.setType(type);
-            final StatefulBeanToCsv<T> beanWriter = builder.withMappingStrategy(mappingStrategy).build();
-            try {
-                beanWriter.write(getData(launchesResults));
-            } catch (Exception e) {
-                throw new IOException(e);
-            }
-        }
+                          final String outputDirectory) throws IOException {
+//        final Path dataFolder = Files.createDirectories(outputDirectory.resolve(Constants.DATA_DIR));
+//        final Path csv = dataFolder.resolve(fileName);
+//
+//        try (Writer writer = Files.newBufferedWriter(csv)) {
+//            final StatefulBeanToCsvBuilder<T> builder = new StatefulBeanToCsvBuilder<>(writer);
+//            final CustomMappingStrategy<T> mappingStrategy = new CustomMappingStrategy<>();
+//            mappingStrategy.setType(type);
+//            final StatefulBeanToCsv<T> beanWriter = builder.withMappingStrategy(mappingStrategy).build();
+//            try {
+//                beanWriter.write(getData(launchesResults));
+//            } catch (Exception e) {
+//                throw new IOException(e);
+//            }
+//        }
     }
 
     protected abstract List<T> getData(List<LaunchResults> launchesResults);

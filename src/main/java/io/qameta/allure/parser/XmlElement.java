@@ -115,6 +115,11 @@ public class XmlElement implements Iterable<XmlElement> {
     }
 
     private Predicate<XmlElement> elementWithName(final String name) {
-        return xmlElement -> Objects.equals(xmlElement.getName(), name);
+        return new Predicate<XmlElement>() {
+            @Override
+            public boolean test(XmlElement xmlElement) {
+                return Objects.equals(xmlElement.getName(), name);
+            }
+        };
     }
 }

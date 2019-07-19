@@ -20,13 +20,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java8.util.Objects;
 import java8.util.Optional;
+import java8.util.function.BinaryOperator;
+import java8.util.function.Function;
+import java8.util.function.Predicate;
+import java8.util.stream.StreamSupport;
 
 import static java.util.Collections.emptyList;
 import static java8.util.Objects.isNull;
 
-/**
- * @author charlie (Dmitry Baev).
- */
 public interface Summarizable {
 
     String getStatusMessage();
@@ -41,9 +42,19 @@ public interface Summarizable {
     default long getStepsCount() {
         final List<Step> steps = isNull(getSteps()) ? emptyList() : getSteps();
         final long stepsCount = steps.size();
-        return steps.stream()
-                .map(Step::getStepsCount)
-                .reduce(stepsCount, Long::sum);
+        return StreamSupport.stream(steps)
+                .map(new Function<Step, Long>() {
+                    @Override
+                    public Long apply(Step step) {
+                        return step.getStepsCount();
+                    }
+                })
+                .reduce(stepsCount, new BinaryOperator<Long>() {
+                    @Override
+                    public Long apply(Long aLong, Long aLong2) {
+                        return Long.sum(aLong,aLong2);
+                    }
+                });
     }
 
     @JsonProperty
@@ -51,23 +62,48 @@ public interface Summarizable {
         final List<Attachment> attachments = isNull(getAttachments()) ? emptyList() : getAttachments();
         final List<Step> steps = isNull(getSteps()) ? emptyList() : getSteps();
         final long attachmentsCount = isNull(attachments) ? 0 : attachments.size();
-        return steps.stream()
-                .map(Step::getAttachmentsCount)
-                .reduce(attachmentsCount, Long::sum);
+        return StreamSupport.stream(steps)
+                .map(new Function<Step, Long>() {
+                    @Override
+                    public Long apply(Step step) {
+                        return step.getAttachmentsCount();
+                    }
+                })
+                .reduce(attachmentsCount, new BinaryOperator<Long>() {
+                    @Override
+                    public Long apply(Long aLong, Long aLong2) {
+                        return Long.sum(aLong,aLong2);
+                    }
+                });
     }
 
     @JsonProperty
     default boolean shouldDisplayMessage() {
         final Optional<String> message = Optional.ofNullable(getStatusMessage());
-        return message.isPresent() && getSteps().stream()
-                .noneMatch(step -> step.hasMessage(message.get()));
+        return message.isPresent() && StreamSupport.stream(getSteps())
+                .noneMatch(new Predicate<Step>() {
+                    @Override
+                    public boolean test(Step step) {
+                        return step.hasMessage(message.get());
+                    }
+                });
     }
 
     default boolean hasMessage(String message) {
         final Optional<String> current = Optional.ofNullable(getStatusMessage())
-                .filter(s -> Objects.equals(s, message));
-        return current.isPresent() || getSteps().stream()
-                .anyMatch(step -> step.hasMessage(message));
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String s) {
+                        return Objects.equals(s, message);
+                    }
+                });
+        return current.isPresent() || StreamSupport.stream(getSteps())
+                .anyMatch(new Predicate<Step>() {
+                    @Override
+                    public boolean test(Step step) {
+                        return step.hasMessage(message);
+                    }
+                });
     }
 
     @JsonProperty

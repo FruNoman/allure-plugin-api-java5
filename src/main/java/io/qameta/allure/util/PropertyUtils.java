@@ -16,6 +16,7 @@
 package io.qameta.allure.util;
 
 import io.qameta.allure.exception.PropertyNotFoundException;
+import java8.util.function.Predicate;
 import org.apache.commons.lang3.StringUtils;
 
 import java8.util.Optional;
@@ -32,7 +33,12 @@ public final class PropertyUtils {
     public static Optional<String> getProperty(final String key) {
         final Properties properties = new Properties();
         properties.putAll(System.getenv());
-        return Optional.ofNullable(properties.getProperty(key)).filter(StringUtils::isNotBlank);
+        return Optional.ofNullable(properties.getProperty(key)).filter(new Predicate<String>() {
+            @Override
+            public boolean test(String s) {
+                return StringUtils.isNotBlank(s);
+            }
+        });
     }
 
     @SuppressWarnings("PMD.AvoidThrowingNullPointerException")
