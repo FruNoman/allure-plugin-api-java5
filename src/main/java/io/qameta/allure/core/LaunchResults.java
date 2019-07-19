@@ -52,7 +52,7 @@ public interface LaunchResults {
      *
      * @return attachments.
      */
-    Map<Path, Attachment> getAttachments();
+    Map<String, Attachment> getAttachments();
 
     /**
      * Returns extra info by given name.
