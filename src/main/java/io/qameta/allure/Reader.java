@@ -18,13 +18,13 @@ package io.qameta.allure;
 import io.qameta.allure.core.Configuration;
 import io.qameta.allure.core.ResultsVisitor;
 
-import java.io.InputStream;
-import java.util.Map;
+import java.io.File;
+import java.util.List;
 
 
 @FunctionalInterface
 public interface Reader extends Extension {
 
-    void readResults(Configuration configuration, ResultsVisitor visitor, Map<String, InputStream> directory);
+    void readResults(Configuration configuration, ResultsVisitor visitor, List<File>  listFiles);
 
 }
