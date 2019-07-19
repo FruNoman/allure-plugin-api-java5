@@ -18,6 +18,7 @@ package io.qameta.allure.core;
 import io.qameta.allure.entity.Attachment;
 import io.qameta.allure.entity.TestResult;
 
+import java.io.File;
 import java.nio.file.Path;
 
 /**
@@ -35,7 +36,7 @@ public interface ResultsVisitor {
      * @param attachmentFile the attachment file to process.
      * @return created {@link Attachment}.
      */
-    Attachment visitAttachmentFile(Path attachmentFile);
+    Attachment visitAttachmentFile(File attachmentFile);
 
     /**
      * Process test result.
