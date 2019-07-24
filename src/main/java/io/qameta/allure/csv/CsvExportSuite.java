@@ -18,6 +18,7 @@ package io.qameta.allure.csv;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 import io.qameta.allure.entity.TestResult;
+import io.qameta.allure.util.UtilsAdv;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -79,11 +80,11 @@ public class CsvExportSuite implements Serializable {
         this.duration = result.getTime().getDuration() != null ? result.getTime().getDuration().toString() : null;
         this.start = result.getTime().getStart() != null ? new Date(result.getTime().getStart()).toString() : null;
         this.stop = result.getTime().getStop() != null ? new Date(result.getTime().getStop()).toString() : null;
-        this.parentSuite = resultMap.getOrDefault("parentSuite", null);
-        this.suite = resultMap.getOrDefault("suite", null);
-        this.subSuite = resultMap.getOrDefault("subSuite", null);
-        this.testClass = resultMap.getOrDefault("testClass", null);
-        this.testMethod = resultMap.getOrDefault("testMethod", null);
+        this.parentSuite = new UtilsAdv<String,String>().getOrDefault(resultMap,"parentSuite", null);
+        this.suite = new UtilsAdv<String,String>().getOrDefault(resultMap,"suite", null);
+        this.subSuite = new UtilsAdv<String,String>().getOrDefault(resultMap,"subSuite", null);
+        this.testClass = new UtilsAdv<String,String>().getOrDefault(resultMap,"testClass", null);
+        this.testMethod = new UtilsAdv<String,String>().getOrDefault(resultMap,"testMethod", null);
         this.name = result.getName();
         this.description = result.getDescription();
     }
