@@ -60,6 +60,7 @@ public abstract class CommonCsvExportAggregator<T> implements Aggregator {
 //                throw new IOException(e);
 //            }
 //        }
+        getData(launchesResults);
     }
 
     protected abstract List<T> getData(List<LaunchResults> launchesResults);

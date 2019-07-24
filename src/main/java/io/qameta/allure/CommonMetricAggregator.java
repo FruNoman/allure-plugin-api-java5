@@ -60,6 +60,7 @@ public abstract class CommonMetricAggregator implements Aggregator {
 //        try (Writer writer = Files.newBufferedWriter(dataFile, StandardCharsets.UTF_8)) {
 //            writer.write(getData(launchesResults));
 //        }
+        getData(launchesResults);
     }
 
     public abstract List<Metric> getMetrics();

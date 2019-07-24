@@ -53,6 +53,7 @@ public abstract class CommonJsonAggregator implements Aggregator {
 //        try (OutputStream os = Files.newOutputStream(dataFile)) {
 //            jacksonContext.getValue().writeValue(os, getData(launchesResults));
 //        }
+        getData(launchesResults);
     }
 
     protected abstract Object getData(List<LaunchResults> launches);
