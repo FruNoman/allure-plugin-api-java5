@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="allure-api-plugin" />
+        <module name="allure-plugin-api-java5" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

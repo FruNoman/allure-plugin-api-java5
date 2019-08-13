@@ -44,32 +44,32 @@ public class StageResult implements Serializable, Summarizable {
 
     @Override
     public String getStatusMessage() {
-        return null;
+        return statusMessage;
     }
 
     @Override
     public List<Step> getSteps() {
-        return null;
+        return steps;
     }
 
     @Override
     public List<Attachment> getAttachments() {
-        return null;
+        return attachments;
     }
 
     @Override
     public List<Parameter> getParameters() {
-        return null;
+        return parameters;
     }
 
     @Override
     public long getStepsCount() {
-        return 0;
+        return steps.size();
     }
 
     @Override
     public long getAttachmentsCount() {
-        return 0;
+        return attachments.size();
     }
 
     @Override
