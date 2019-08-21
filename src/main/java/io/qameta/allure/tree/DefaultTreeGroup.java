@@ -15,13 +15,14 @@
  */
 package io.qameta.allure.tree;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author charlie (Dmitry Baev).
  */
-public class DefaultTreeGroup implements TreeGroup {
+public class DefaultTreeGroup implements TreeGroup , Serializable {
 
     private String name;
 

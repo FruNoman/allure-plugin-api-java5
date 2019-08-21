@@ -15,10 +15,12 @@
  */
 package io.qameta.allure.tree;
 
+import java.io.Serializable;
+
 /**
  * @author charlie (Dmitry Baev).
  */
-public class TestResultTreeGroup extends DefaultTreeGroup {
+public class TestResultTreeGroup extends DefaultTreeGroup implements Serializable {
 
     private String uid;
 

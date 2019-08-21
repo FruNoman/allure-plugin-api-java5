@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * @author charlie (Dmitry Baev).
  */
-public interface TreeGroup extends TreeNode {
+public interface TreeGroup extends TreeNode{
 
     List<TreeNode> getChildren();
 

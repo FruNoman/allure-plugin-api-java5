@@ -15,10 +15,12 @@
  */
 package io.qameta.allure.tree;
 
+import java.io.Serializable;
+
 /**
  * @author charlie (Dmitry Baev).
  */
-public interface TreeNode{
+public interface TreeNode extends Serializable {
 
     String getName();
 

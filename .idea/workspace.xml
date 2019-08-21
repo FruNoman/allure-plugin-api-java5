@@ -4,7 +4,6 @@
     <list default="true" id="f37ad358-d643-4219-ac17-b2b1fdcdddb1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeNode.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,10 +41,10 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -230,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563968697919</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="refactor stage result">
+      <created>1565688319290</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1565688319290</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -271,6 +277,7 @@
     <MESSAGE value="fix ResultVisitor" />
     <MESSAGE value="fix LaunchResults" />
     <MESSAGE value="fix Aggregators" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix Aggregators" />
+    <MESSAGE value="refactor stage result" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor stage result" />
   </component>
 </project>
