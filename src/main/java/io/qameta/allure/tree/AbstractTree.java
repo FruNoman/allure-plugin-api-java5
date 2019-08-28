@@ -17,7 +17,6 @@ package io.qameta.allure.tree;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
 
 import java8.util.Objects;
 import java8.util.Optional;
@@ -26,6 +25,7 @@ import java8.util.function.Supplier;
 import java8.util.function.Consumer;
 import java8.util.function.Function;
 import java8.util.stream.RefStreams;
+import java8.util.stream.Stream;
 import java8.util.stream.StreamSupport;
 
 /**
@@ -72,24 +72,28 @@ public abstract class AbstractTree<T, S extends TreeGroup, U extends TreeLeaf> i
                 .findFirst();
     }
 
-    protected java.util.stream.Stream<S> getEndNodes(final T item, final S node,
-                                                     final List<TreeLayer> classifiers,
-                                                     final int index) {
+    protected Stream<S> getEndNodes(final T item, final S node,
+                                    final List<TreeLayer> classifiers,
+                                    final int index) {
         if (index >= classifiers.size()) {
-            return Stream.of(node);
+            return RefStreams.of(node);
         }
         final TreeLayer layer = classifiers.get(index);
-        return layer.getGroupNames().stream()
-                .flatMap(name -> {
-                    // @formatter:off
-                    final S child = node.findNodeOfType(name, getRootType())
-                            .orElseGet(() -> {
-                                final S created = groupFactory.create(node, name, item);
-                                node.addChild(created);
-                                return created;
-                            });
-                    // @formatter:on
-                    return getEndNodes(item, child, classifiers, index + 1);
+        return StreamSupport.stream(layer.getGroupNames())
+                .flatMap(new Function<String, Stream<? extends S>>() {
+                    @Override
+                    public Stream<? extends S> apply(String s) {
+                        final S child = node.findNodeOfType(s, getRootType())
+                                .orElseGet(new Supplier<S>() {
+                                    @Override
+                                    public S get() {
+                                        final S created = groupFactory.create(node, s, item);
+                                        node.addChild(created);
+                                        return created;
+                                    }
+                                });
+                        return getEndNodes(item, child, classifiers, index + 1);
+                    }
                 });
     }
 
