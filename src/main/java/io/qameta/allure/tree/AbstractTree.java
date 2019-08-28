@@ -58,9 +58,12 @@ public abstract class AbstractTree<T, S extends TreeGroup, U extends TreeLeaf> i
     @Override
     public void add(final T item) {
         getEndNodes(item, root, treeClassifier.classify(item), 0)
-                .forEach(node -> {
-                    final TreeLeaf leafNode = leafFactory.create(node, item);
-                    node.addChild(leafNode);
+                .forEach(new Consumer<S>() {
+                    @Override
+                    public void accept(S s) {
+                        final TreeLeaf leafNode = leafFactory.create(s, item);
+                        s.addChild(leafNode);
+                    }
                 });
     }
 
