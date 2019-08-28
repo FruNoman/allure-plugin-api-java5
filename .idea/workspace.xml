@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f37ad358-d643-4219-ac17-b2b1fdcdddb1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/AbstractTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/AbstractTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -240,7 +239,21 @@
       <option name="project" value="LOCAL" />
       <updated>1566375604678</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="add serializable to tree">
+      <created>1566984299246</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1566984299246</updated>
+    </task>
+    <task id="LOCAL-00026" summary="add serializable to tree">
+      <created>1566984368251</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1566984368251</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
