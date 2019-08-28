@@ -20,6 +20,7 @@ import java.util.List;
 
 import java8.util.Objects;
 import java8.util.Optional;
+import java8.util.function.Predicate;
 import java8.util.function.Supplier;
 
 import java8.util.function.Consumer;
@@ -66,9 +67,24 @@ public abstract class AbstractTree<T, S extends TreeGroup, U extends TreeLeaf> i
     @Override
     public <T extends TreeNode> Optional<T> findNodeOfType(String name, Class<T> type) {
                 return StreamSupport.stream(getChildren())
-                .filter(type::isInstance)
-                .map(type::cast)
-                .filter(node -> Objects.equals(node.getName(), name))
+                .filter(new Predicate<TreeNode>() {
+                    @Override
+                    public boolean test(TreeNode treeNode) {
+                        return type.isInstance(treeNode);
+                    }
+                })
+                .map(new Function<TreeNode, T>() {
+                    @Override
+                    public T apply(TreeNode treeNode) {
+                        return (T) treeNode;
+                    }
+                })
+                .filter(new Predicate<T>() {
+                    @Override
+                    public boolean test(T t) {
+                        return Objects.equals(t.getName(), name);
+                    }
+                })
                 .findFirst();
     }
 
