@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f37ad358-d643-4219-ac17-b2b1fdcdddb1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/AbstractTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/AbstractTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,11 +32,6 @@
         <option name="importAutomatically" value="true" />
       </MavenImportingSettings>
     </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="-2" />
-    <option name="width" value="1920" />
-    <option name="height" value="1082" />
   </component>
   <component name="ProjectId" id="1OSt84G9sPV7k287jeJxAfXFgFe" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -236,7 +233,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565688319290</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="add serializable to tree">
+      <created>1566375604677</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1566375604678</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -278,6 +282,18 @@
     <MESSAGE value="fix LaunchResults" />
     <MESSAGE value="fix Aggregators" />
     <MESSAGE value="refactor stage result" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor stage result" />
+    <MESSAGE value="add serializable to tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="add serializable to tree" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/qameta/allure/tree/TreeUtils.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -24,6 +24,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+
+
 import java8.util.Objects;
 import java8.util.function.BiFunction;
 import java8.util.function.BinaryOperator;
@@ -31,8 +33,8 @@ import java8.util.function.Function;
 import java8.util.function.Predicate;
 import java8.util.stream.Collectors;
 import java8.util.stream.RefStreams;
-import java8.util.stream.Stream;
 import java8.util.stream.StreamSupport;
+import org.apache.commons.lang3.StringUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -47,8 +49,12 @@ public final class TreeUtils {
 
     public static String createGroupUid(final String parentUid, final String groupName) {
         final MessageDigest md = getMessageDigest();
-        md.update(Objects.toString(parentUid).getBytes(UTF_8));
-        md.update(Objects.toString(groupName).getBytes(UTF_8));
+        try {
+            md.update(Objects.toString(parentUid).getBytes("UTF-8"));
+            md.update(Objects.toString(groupName).getBytes("UTF-8"));
+        }catch (Exception e){
+
+        }
         return DatatypeConverter.printHexBinary(md.digest()).toLowerCase();
     }
 
@@ -63,14 +69,14 @@ public final class TreeUtils {
                 })
                 .filter(new Predicate<List<String>>() {
                     @Override
-                    public boolean test(List<String> stringList) {
-                        return !stringList.isEmpty();
+                    public boolean test(List<String> strings) {
+                        return !strings.isEmpty();
                     }
                 })
-                .map(new Function<List<String>, TreeLayer>() {
+                .map(new Function<List<String>, DefaultTreeLayer>() {
                     @Override
-                    public TreeLayer apply(List<String> stringList) {
-                        return new DefaultTreeLayer(stringList);
+                    public DefaultTreeLayer apply(List<String> strings) {
+                        return new DefaultTreeLayer(strings);
                     }
                 })
                 .collect(Collectors.toList());

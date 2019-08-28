@@ -16,8 +16,9 @@
 package io.qameta.allure.tree;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java8.util.Objects;
+import java8.util.Optional;
+import java8.util.stream.StreamSupport;
 
 /**
  * @author charlie (Dmitry Baev).
@@ -27,5 +28,12 @@ public interface TreeGroup extends TreeNode{
     List<TreeNode> getChildren();
 
     void addChild(TreeNode node);
-
+    public <T extends TreeNode> Optional<T> findNodeOfType(final String name, final Class<T> type);
+//    default <T extends TreeNode> Optional<T> findNodeOfType(final String name, final Class<T> type) {
+//        return StreamSupport.stream(getChildren())
+//                .filter(type::isInstance)
+//                .map(type::cast)
+//                .filter(node -> Objects.equals(node.getName(), name))
+//                .findFirst();
+//    }
 }

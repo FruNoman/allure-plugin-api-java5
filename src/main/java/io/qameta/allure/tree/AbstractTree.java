@@ -17,9 +17,9 @@ package io.qameta.allure.tree;
 
 import java.util.Collections;
 import java.util.List;
+
 import java8.util.Objects;
 import java8.util.Optional;
-import java8.util.function.Predicate;
 import java8.util.function.Supplier;
 
 import java8.util.function.Consumer;
@@ -52,39 +52,27 @@ public abstract class AbstractTree<T, S extends TreeGroup, U extends TreeLeaf> i
         this.leafFactory = leafFactory;
     }
 
-    public <S extends TreeNode> Optional<S> findNodeOfType(final String name, final Class<S> type) {
-        return StreamSupport.stream(getChildren())
-                .filter(new Predicate<TreeNode>() {
-                    @Override
-                    public boolean test(TreeNode treeNode) {
-                        return type.isInstance(treeNode);
-                    }
-                })
-                .map(new Function<TreeNode, S>() {
-                    @Override
-                    public S apply(TreeNode treeNode) {
-                        return type.cast(treeNode);
-                    }
-                })
-                .filter(new Predicate<S>() {
-                    @Override
-                    public boolean test(S s) {
-                        return Objects.equals(s.getName(), name);
-                    }
-                })
-                .findFirst();
-    }
+
 
     @Override
     public void add(final T item) {
         getEndNodes(item, root, treeClassifier.classify(item), 0)
                 .forEach(new Consumer<S>() {
                     @Override
-                    public void accept(S s) {
-                        final TreeLeaf leafNode = leafFactory.create(s, item);
-                        s.addChild(leafNode);
+                    public void accept(S node) {
+                        final TreeLeaf leafNode = leafFactory.create(node, item);
+                        node.addChild(leafNode);
                     }
                 });
+    }
+
+    @Override
+    public <T extends TreeNode> Optional<T> findNodeOfType(String name, Class<T> type) {
+                return StreamSupport.stream(getChildren())
+                .filter(type::isInstance)
+                .map(type::cast)
+                .filter(node -> Objects.equals(node.getName(), name))
+                .findFirst();
     }
 
     protected Stream<S> getEndNodes(final T item, final S node,
