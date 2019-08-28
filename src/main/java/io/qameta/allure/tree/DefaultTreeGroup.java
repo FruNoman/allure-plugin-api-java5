@@ -15,6 +15,10 @@
  */
 package io.qameta.allure.tree;
 
+import java8.util.Objects;
+import java8.util.Optional;
+import java8.util.stream.StreamSupport;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,15 @@ public class DefaultTreeGroup implements TreeGroup , Serializable {
     @Override
     public void addChild(final TreeNode node) {
         children.add(node);
+    }
+
+    @Override
+    public <T extends TreeNode> Optional<T> findNodeOfType(String name, Class<T> type) {
+        return StreamSupport.stream(getChildren())
+                .filter(type::isInstance)
+                .map(type::cast)
+                .filter(node -> Objects.equals(node.getName(), name))
+                .findFirst();
     }
 
     public void setName(final String name) {
